@@ -1,0 +1,15 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    {% if user.is_authenticated %}
+        {% for listing in listings %}
+            <a href="{% url 'listing' listing.id %}">{{ listing.title }}</a>
+        {% empty %}
+            <li>Your watchlist is empty!</li>
+        {% endfor %}
+    {% else %}
+        <a href="{% url 'login' %}">You need to log in</a>
+    {% endif %}
+    
+{% endblock %}

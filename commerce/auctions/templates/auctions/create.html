@@ -1,0 +1,35 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    {% if error %}
+        <h1>{{ error }}</h1>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+        <form action="{% url 'create' %}" method="post">
+            {% csrf_token %}
+            <ul>
+                <li>
+                    <input type="text" name="title" placeholder="Title">
+                </li>
+                <li>
+                    <input type="text" name="price" placeholder="Price">
+                </li>
+                <li>
+                    <textarea type="text" name="description" placeholder="Description"></textarea>
+                </li>
+                <li>
+                    <input type="text" name="img_url" placeholder="IMG URL">
+                </li>
+                <li>
+                    <input type="text" name="category" placeholder="Category">
+                </li>
+                <li>
+                    <input type="Submit">
+                </li>
+            </ul>
+        </form>
+    {% else %}
+        <a href="{% url 'login' %}">You need to log in</a>
+    {% endif %}
+{% endblock %}

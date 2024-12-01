@@ -1,0 +1,50 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
+    <ul>
+        <li>
+            <h1>Title: {{ listing.title }} </h1>
+            <h4>Starting price: {{ listing.price }} </h4>
+
+                <h4>
+                    {% if listing.get_highest_bid %}
+                        Current bid: {{ listing.get_highest_bid.amount }}
+                    {% else %}
+                        Current bid: {{ listing.price }}
+                    {% endif %}
+                </h4>
+        
+        </li>
+        <li>
+            Post time: {{ listing.created }}
+        </li>
+    </ul>
+    {% if user.is_authenticated %}
+        <form action="{% url 'listing' listing.id %}" method="post">
+            {% csrf_token %}
+            {% if is_in_watchlist %}
+                <button type="submit">Remove from watchlist</button>
+            {% else %}
+                <button type="submit">Add to watchlist</button>
+            {% endif %}
+        </form>
+        Enter a bid:
+        <form action="{% url 'bid' listing.id %}" method="post">
+            {% csrf_token %}
+            <input type="number" name="bid" placegolder="Enter a bid" required>
+        </form>
+
+    {% else %}
+        <a href="{% url 'login' %}">Login to comment, add listings to watchlist and bid</a>
+    {% endif %}
+
+{% endblock %}
