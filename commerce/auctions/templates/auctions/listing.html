@@ -14,6 +14,7 @@
         <li>
             <h1>Title: {{ listing.title }} </h1>
             <h4>Starting price: {{ listing.price }} </h4>
+            <h4>Liked: {{ listing.watchers.count }} </h4>
 
                 <h4>
                     {% if listing.get_highest_bid %}
@@ -42,9 +43,30 @@
             {% csrf_token %}
             <input type="number" name="bid" placegolder="Enter a bid" required>
         </form>
-
+        Add a comment:
+        <form action="{% url 'comment' listing.id %}" method="post">
+            {% csrf_token %}
+            <textarea name="comment" placegolder="Comment..." required></textarea>
+            <input type="submit" value="Post a comment">
+        </form>
     {% else %}
         <a href="{% url 'login' %}">Login to comment, add listings to watchlist and bid</a>
     {% endif %}
+
+    <div class="comments-section">
+        <h2>Comments</h2>
+        {% if comments %}
+            <ul>
+                {% for comment in comments %}
+                    <li>
+                        <strong>{{ comment.user.username }}</strong> ({{ comment.created|date:"d M Y, H:i" }}):
+                        <p>{{ comment.description }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No comments yet. Be the first to comment!</p>
+        {% endif %}
+    </div>
 
 {% endblock %}
