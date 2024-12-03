@@ -80,10 +80,13 @@ def listing(request, listing_id):
             user.watchlist.add(listing)
             messages.info(request, "Listing added to watchlist.")
         return HttpResponseRedirect(reverse("listing", args=(listing.id,)))
-        
+
+    comments = listing.comment_set.all().order_by('-created')
+    
     return render(request, "auctions/listing.html", {
         "listing": listing, 
         "is_in_watchlist": is_in_watchlist,
+        "comments": comments,
     })
     
 @login_required
@@ -110,8 +113,12 @@ def bid(request, listing_id):
     
 
 def comment(request, listing_id):
-    ...
-
+    listing = Listing.objects.get(pk=listing_id)
+    if request.method == 'POST':
+        comment = request.POST["comment"]
+        Comment.objects.create(user=request.user, listing=listing, description=comment)
+        return HttpResponseRedirect(reverse("listing", args=(listing_id,)))
+    return render(request, "auctions/listing.html")
 
 def create(request):
     if request.method == "POST":

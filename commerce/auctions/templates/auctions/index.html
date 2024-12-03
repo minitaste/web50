@@ -6,9 +6,13 @@
 
     <ul>
         {% for listing in listings %}
-            <a href="{% url 'listing' listing.id %}">
-                <li>Listing: {{ listing.title }}</li>
-            </a>
+            <li>
+                <a href="{% url 'listing' listing.id %}">
+                        Listing: {{ listing.title }}
+                </a>
+                <img src="{{ listing.img_url }}" alt="{{ listing.title }}" class="d-block mx-auto img-thumbnail" style="width: 300px; height: 200px; object-fit: cover;">
+                
+            </li>
         {% endfor %}
     </ul>
 

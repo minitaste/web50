@@ -6,7 +6,10 @@
         <h2>Category {{ category }}</h2>
         <ul>
             {% for listing in listings %}
-                <li><a href="{% url 'listing' listing.id %}">{{ listing.title }}</a> </li>
+                <li>
+                    <a href="{% url 'listing' listing.id %}">{{ listing.title }}</a>
+                    <img src="{{ listing.img_url }}" alt="{{ listing.title }}" class="d-block mx-auto img-thumbnail" style="width: 300px; height: 200px; object-fit: cover;">
+                </li>
             {% endfor %}
         </ul>
     {% else %}
