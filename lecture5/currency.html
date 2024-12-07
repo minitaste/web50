@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            document.querySelector('form').onsubmit = function() {
+                // const songname = document.querySelector('#songname').value
+                
+                const attribute = document.querySelector('#attribute').value
+                
+                fetch(`https://itunes.apple.com/search?term=Hello&entity=song&limit=5`)
+                // fetch(`https://itunes.apple.com/search?term=${songname}&entity=song&limit=5`)
+
+                .then(response => response.json())
+                .then(data => {
+                    const results = data.results; 
+                    console.log(data)
+                    results.forEach(result => {
+                        // const song = result.trackName;
+
+                        // const song = result[songname];
+                        const artist = result.artistName;                 
+                        
+                        // experimenting, searching by sjon attribute
+                        const attrib = result[attribute];
+                        
+                        if (attrib !== undefined) {
+                            document.querySelector('#result').innerHTML += `Song name: ${attrib}, artist name: ${artist}<br>`
+                        } else {
+                            document.querySelector('#result').innerHTML = 'Invalid json attribute.'
+                        }
+                        
+                    })
+                .catch(error => {
+                    console.log("Error", error)
+                })
+                });
+                
+                return false
+            }
+            
+        });
+    </script>
+</head>
+<body>
+    <!-- <form>
+        <input id="songname" placeholder="Enter a song name">
+        <input type="submit" value="Find">
+    </form> -->
+    <form>
+        <input id="attribute" placeholder="Enter a attribute">
+        <input type="submit" value="Find">
+    </form>
+    <div id="result">
+        
+    </div>
+</body>
+</html>
