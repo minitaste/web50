@@ -2,33 +2,39 @@
 {% load static %}
 
 {% block body %}
-    <h2 class="text-white text-3xl font-mono">Welcome, {{ request.user.email }}!</h2>
+    <h2 class="text-3xl font-mono">Welcome, {{ request.user.email }}!</h2>
     <div class="flex justify-between p-4">
-        <button class="text-white" id="inbox">Inbox</button>
-        <button class="text-white" id="compose">Compose</button>
-        <button class="text-white" id="sent">Sent</button>
-        <button class="text-white" id="archived">Archived</button>
-        <a class="text-white" href="{% url 'logout' %}">Log Out</a>
+        <button id="inbox">Inbox</button>
+        <button id="compose">Compose</button>
+        <button id="sent">Sent</button>
+        <button id="archived">Archived</button>
+        <a href="{% url 'logout' %}">Log Out</a>
     </div>
     <hr>
 
-    <div id="emails-view" class="text-white">
+    <div id="emails-view" class="">
     </div>
 
-    <div id="compose-view" class="text-white">
-        <h3 class="text-center text-3xl">New Email</h3>
+    <div id="compose-view" class="">
+        <h3 class="text-center text-3xl my-2">New Email</h3>
         <form id="compose-form">
-            <div class="text-xl">
+            <div class="text-xl mt-2">
                 From: <input disabled class="underline bg-black" value="{{ request.user.email }}">
             </div>
-            <div class="">
-                To: <input id="compose-recipients" class="form-control">
+            <div class="mt-2">
+                Email recipients:<br><input id="compose-recipients" class="bg-gray-800 p-1 rounded focus:ring focus:ring-sky-600 focus:outline-none" placeholder="example@mail.com">
             </div>
-            <div class="form-group">
-                <input class="form-control" id="compose-subject" placeholder="Subject">
+            <div class="mt-2">
+                Topic:<br>
+                <input class="bg-gray-800 p-1 rounded focus:ring focus:ring-sky-600 focus:outline-none" id="compose-subject" placeholder="Enter a Topic">
             </div>
-            <textarea class="form-control" id="compose-body" placeholder="Body"></textarea>
-            <input type="submit" class="btn btn-primary"/>
+            <div>
+                <p>
+                    Text:
+                </p>
+                <textarea class="mt-2 p-1 rounded-md bg-gray-800 min-w-full min-h-96 focus:ring focus:ring-sky-600 focus:outline-none" id="compose-body" placeholder="Email text"></textarea>
+                <input type="submit" class="mt-4 block mx-auto bg-blue-800  p-2 rounded-lg cursor-pointer hover:bg-blue-900 focus:outline-none" value="Submit"/>
+            </div>
         </form>
     </div>
 {% endblock %}

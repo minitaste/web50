@@ -5,11 +5,10 @@
     <head>
         <title>{% block title %}Mail{% endblock %}</title>
         <script src="https://cdn.tailwindcss.com"></script>
-        <link rel="stylesheet" href="{% static 'mail/styles.css' %}">
         {% block script %}
         {% endblock %}
     </head>
-    <body class="bg-black p-4">
+    <body class="bg-black p-4 text-white">
         <div class="container">
             {% block body %}
             {% endblock %}

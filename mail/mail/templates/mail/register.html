@@ -1,27 +1,30 @@
 {% extends "mail/layout.html" %}
+{% load static %}
+
 
 {% block body %}
 
-    <h2>Register</h2>
+    <h2 class="text-3xl text-center mb-2">Register</h2>
 
     {% if message %}
-        <div>{{ message }}</div>
+        <div class="bg-red-600 text-center my-2 py-2">{{ message }}</div>
     {% endif %}
 
-    <form action="{% url 'register' %}" method="post">
+    <form action="{% url 'register' %}" method="post" class="text-center mt-2">
         {% csrf_token %}
-        <div class="form-group">
-            <input class="form-control" type="email" name="email" placeholder="Email Address">
+        <div class="mb-2">
+            <input class="bg-gray-800 p-1 rounded focus:ring focus:ring-sky-600 focus:outline-none" type="email" name="email" placeholder="Email Address">
+        </div>
+        <div class="mb-2">
+            <input class="bg-gray-800 p-1 rounded focus:ring focus:ring-sky-600 focus:outline-none" type="password" name="password" placeholder="Password">
         </div>
         <div class="form-group">
-            <input class="form-control" type="password" name="password" placeholder="Password">
+            <input class="bg-gray-800 p-1 rounded focus:ring focus:ring-sky-600 focus:outline-none" type="password" name="confirmation" placeholder="Confirm Password">
         </div>
-        <div class="form-group">
-            <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password">
-        </div>
-        <input class="btn btn-primary" type="submit" value="Register">
+        <input class="mt-4 block mx-auto bg-blue-800  p-2 rounded-lg cursor-pointer hover:bg-blue-900 focus:outline-none" type="submit" value="Register">
     </form>
-
-    Already have an account? <a href="{% url 'login' %}">Log In here.</a>
+    <div class="text-center mt-2">
+        Already have an account? <a class="text-sky-300 hover:text-sky-500" href="{% url 'login' %}">Log In here.</a>
+    </div>
 
 {% endblock %}

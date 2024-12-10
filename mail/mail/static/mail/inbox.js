@@ -35,7 +35,7 @@ function load_mailbox(mailbox) {
   document.querySelector('#compose-view').style.display = 'none';
 
   // Show the mailbox name
-  document.querySelector('#emails-view').innerHTML = `<h3 class="ml-3 text-lg">${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
+  document.querySelector('#emails-view').innerHTML = `<h3 class="ml-3 my-2 text-3xl text-center">${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
   
   fetch(`/emails/${mailbox}`)
     .then((response) => {
@@ -100,7 +100,7 @@ function load_email(email_id) {
 
       const archiveButton = document.createElement("button");
       archiveButton.textContent = email.archived ? "Remove from archive" : "Add to archive";
-      archiveButton.className = 'mt-1'
+      archiveButton.className = 'mt-1 hover:underline'
 
       archiveButton.addEventListener('click', () => {
         fetch(`/emails/${email.id}`, {
