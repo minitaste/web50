@@ -1,14 +1,11 @@
+/* npx.css does not exist. tailwindcss -i ./mail/static/mail/styles.css */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 textarea {
     min-height: 400px;
 }
-#emails-view p {
-  font-style: italic;
-  color: #555;
-  margin: 10px 0;
-}  
-.email-item {
-  border: solid black 1px;
-  margin: 5px;
-  padding: 10px;
-}
+
 

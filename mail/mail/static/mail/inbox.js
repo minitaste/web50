@@ -35,7 +35,7 @@ function load_mailbox(mailbox) {
   document.querySelector('#compose-view').style.display = 'none';
 
   // Show the mailbox name
-  document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
+  document.querySelector('#emails-view').innerHTML = `<h3 class="ml-3 text-lg">${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
   
   fetch(`/emails/${mailbox}`)
     .then((response) => {
@@ -51,11 +51,14 @@ function load_mailbox(mailbox) {
           }
           emails.forEach((email => {
             const emailItemDiv = document.createElement('div');
-            emailItemDiv.className = "email-item";
+            emailItemDiv.className =
+              "m-1 mb-3 p-2.5 border-silod border-2 border-sky-500 rounded-lg cursor-pointer";
             emailItemDiv.innerHTML = `
-            <p>From: ${email.sender}</p>
-            Topic: ${email.subject},
-            Sent at: ${email.timestamp}
+            <div class="flex justify-between mb-2">
+              <p class="font-bold text-lg">Topic: ${email.subject}.</p>
+              <p>From: <span class="underline underline-offset-2">${email.sender}</span></p>
+            </div>
+            <p>Sent at: ${email.timestamp}</p>
           `;
             emailItemDiv.addEventListener('click', () => load_email(email.id));
             emailsContainer.appendChild(emailItemDiv);
@@ -76,17 +79,28 @@ function load_email(email_id) {
       emailsView.innerHTML = '';
       emailDiv = document.createElement('div');
       
-      emailDiv.className = "email";
+      emailDiv.className = "mt-3 p-2";
       emailDiv.innerHTML = `
-      <p>From: ${email.sender}.</p>
-      <p>Send to: ${email.recipients}.</p>
-      <p>Subject: ${email.subject}.</p>
-      Text: ${email.body}.
-      <p>Sent at: ${email.timestamp}.</p>
+      <div class="flex justify-between mb-2">
+        <p class="text-3xl">Topic: ${email.subject}.</p>
+        <div>
+          <p class="text-xs">Sent at: ${email.timestamp}.</p>
+          <p class="text-xs">From: ${email.sender}.</p>
+        
+        </div>
+      
+      </div>
+      <div>
+        Email content:
+        <p class="text-xl bg-slate-800 mt-1 p-2 rounded-lg">
+          ${email.body}.
+        </p>
+      </div>
       `;
 
       const archiveButton = document.createElement("button");
       archiveButton.textContent = email.archived ? "Remove from archive" : "Add to archive";
+      archiveButton.className = 'mt-1'
 
       archiveButton.addEventListener('click', () => {
         fetch(`/emails/${email.id}`, {
