@@ -2,18 +2,18 @@
 
 {% block body %}
 
-    <h2>Active Listings</h2>
+    <h2 class="text-center text-2xl mb-2">Active Listings</h2>
 
-    <ul>
-        {% for listing in listings %}
-            <li>
+    <div class="grid grid-cols-3 gap-4">
+            {% for listing in listings %}
+            <div>
+                <img src="{{ listing.img_url }}" alt="{{ listing.title }}" class="inline-block" style="width: 300px; height: 200px; object-fit: cover;">
                 <a href="{% url 'listing' listing.id %}">
-                        Listing: {{ listing.title }}
+                    Listing: {{ listing.title }}
                 </a>
-                <img src="{{ listing.img_url }}" alt="{{ listing.title }}" class="d-block mx-auto img-thumbnail" style="width: 300px; height: 200px; object-fit: cover;">
+            </div>
                 
-            </li>
-        {% endfor %}
-    </ul>
-
+                    
+            {% endfor %}
+    </div>
 {% endblock %}

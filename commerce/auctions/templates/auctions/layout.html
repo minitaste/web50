@@ -7,28 +7,31 @@
         <script src="https://cdn.tailwindcss.com"></script>
         <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
     </head>
-    <body class="p-0 pl-32 pt-24">
+    <body class="p-0 pl-40 pt-24 text-purple-950 font-semibold">
         <div class="z-0 flex justify-between items-center h-20 border-b border-solid-gray-700 px-2 fixed left-0 right-0 top-0">
-            <div class="">
-                <h1>MiniTaste store!</h1>
+            <div>
+                <h1 class="font-bold text-2xl">MiniTaste store!</h1>
             </div>
-            <div class="flex justify-items-end items-center">
+            <div class="flex justify-items-end items-center text-purple-950 font-semibold text-lg">
                 {% if user.is_authenticated %}
-                    Signed in as<strong>{{ user.username }}</strong>.
-                    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                    <span class="">
+                        Signed in as {{ user.username }}
+                    </span>
+                    <a class="bg-purple-300 p-1.5 px-3 ml-2 rounded-md text-purple-950 font-semibold" href="{% url 'logout' %}">Log Out</a>
                 {% else %}
                     <div class="flex items-center">
-                        Not signed in.
-                        <a class="nav-link" href="{% url 'login' %}">Log In</a>
-                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                        <span class="text-purple-950 font-semibold">
+                            Not signed in.
+                        </span>
+                        <a class="bg-purple-300 p-1.5 px-3 ml-2 rounded-md text-purple-950 font-semibold" href="{% url 'login' %}">Log In</a>
+                        <a class="bg-purple-300 p-1.5 px-3 ml-2 rounded-md text-purple-950 font-semibold" href="{% url 'register' %}">Register</a>
                     </div>
                 {% endif %}
             </div>
         </div>
 
-        <div class="bg-white w-28 fixed left-0 bottom-0 top-20 border-r border-solid-gray-700 p-1 -mt-px z-10">
-
-            <ul class="nav">
+        <div class="bg-white w-36 fixed left-0 bottom-0 top-20 border-r border-solid-gray-700 p-2 pl-3 z-10 ">
+            <ul class="flex flex-col space-y-3">
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'index' %}">Active Listings</a>
                 </li>
@@ -41,18 +44,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'create' %}">Create Listing</a>
                 </li>
-                {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Log In</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'register' %}">Register</a>
-                    </li>
-                {% endif %}
             </ul>
         </div>
 
