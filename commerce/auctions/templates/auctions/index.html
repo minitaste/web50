@@ -4,13 +4,25 @@
 
     <h2 class="text-center text-2xl mb-2">Active Listings</h2>
 
-    <div class="grid grid-cols-3 gap-4">
+    <div class="grid grid-cols-3 lg:grid-cols-4 gap-4 font-normal">
             {% for listing in listings %}
-            <div>
-                <img src="{{ listing.img_url }}" alt="{{ listing.title }}" class="inline-block" style="width: 300px; height: 200px; object-fit: cover;">
+            <div class="cursor-pointer">
                 <a href="{% url 'listing' listing.id %}">
-                    Listing: {{ listing.title }}
+                    <img src="{{ listing.img_url }}" alt="{{ listing.title }}" class="inline-block" style="width: 300px; height: 200px; object-fit: cover;">
+                    <div class="bg-gray-200 p-1">
+                        <ul class="block">
+                            <li>
+                                Listing: {{ listing.title }}
+                            </li>
+                            <li>
+                                Price: ${{ listing.price }}
+                            </li>
+                        </ul>
+                    </div>
                 </a>
+                <!-- <div>
+                    <img>
+                </div> -->
             </div>
                 
                     

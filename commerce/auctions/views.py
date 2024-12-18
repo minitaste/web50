@@ -10,8 +10,10 @@ from .models import User, Listing, Bid, Comment
 
 
 def index(request):
+    categories = Listing.objects.values_list('category', flat=True).distinct()
     return render(request, "auctions/index.html", {
-        "listings": Listing.objects.all()
+        "listings": Listing.objects.all(),
+        "categories": categories,
     })
 
 
@@ -119,6 +121,7 @@ def comment(request, listing_id):
         Comment.objects.create(user=request.user, listing=listing, description=comment)
         return HttpResponseRedirect(reverse("listing", args=(listing_id,)))
     return render(request, "auctions/listing.html")
+
 
 def create(request):
     if request.method == "POST":
