@@ -91,6 +91,7 @@ def listing(request, listing_id):
         "comments": comments,
     })
     
+    
 @login_required
 def bid(request, listing_id):
     if request.method == "POST":
