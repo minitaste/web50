@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -84,4 +85,19 @@ def new_post(request):
 def all_posts(request):
     return render(request, "network/all_posts.html", {
         "posts": Post.objects.all(),
+    })
+
+
+def profile(request, username):
+    try:
+        user = User.objects.get(username=username)
+        posts = Post.objects.filter(author=user)
+        
+    except User.DoesNotExist:
+        messages.error(request, "User not found.")
+        return redirect("index")
+    
+    return render(request, "network/profile.html", {
+        "user": user,
+        "posts": posts,
     })
