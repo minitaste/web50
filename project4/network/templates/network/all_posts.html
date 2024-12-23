@@ -1,0 +1,28 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    <h1>All posts</h1>
+
+    {% for post in posts %}
+        <ul>
+            <li>
+                Post: {{ forloop.counter }}
+            </li>
+            <li>
+                <h4>{{ post.author }}</h4>
+            </li>
+            <li>
+                <h5>Text:</h5>
+                {{ post.text }}
+            </li>
+            <li>
+                Time:
+                {{ post.created_at|date:"d M Y, H:i" }}
+            </li>
+            <li>
+                Likes:
+                {{ post.likes.count }}
+            </li>
+        </ul>
+    {% endfor %}
+{% endblock %}
