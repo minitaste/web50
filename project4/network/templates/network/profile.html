@@ -5,12 +5,26 @@
 
     <ul>
         <li>
-            Followers: {{ user_profile.followers.count }}
+            Followers: <span id="followers-count">{{ user_profile.followers.count }}</span>
         </li>
         <li>
             Following: {{ user_profile.followings.count }}
         </li>
     </ul>
+
+    {% if user == user_profile %}
+        <p>This is you</p>
+    {% elif user.is_authenticated %}
+        <button id="follow" data-username="{{ user_profile.username }}">
+            {% if is_following %}
+                Unfollow
+            {% else %}
+                Follow
+            {% endif %}
+        </button>
+    {% endif %}
+
+
     <h1>Posts:</h1>
     {% for post in posts %}
         <ul>

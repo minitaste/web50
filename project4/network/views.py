@@ -2,8 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
 from .models import User, Post
@@ -85,15 +85,19 @@ def new_post(request):
 
 def all_posts(request):
     return render(request, "network/all_posts.html", {
-        "posts": Post.objects.all(),
+        "posts": Post.objects.all().order_by('-created_at'),
     })
 
 
 def profile(request, username):
     try:
         user = User.objects.get(username=username)
-        posts = Post.objects.filter(author=user)
-        
+        posts = Post.objects.filter(author=user).order_by('-created_at')
+        is_following = False
+
+        if request.user.is_authenticated:
+            is_following = user.followers.filter(id=request.user.id).exists()
+
     except User.DoesNotExist:
         messages.error(request, "User not found.")
         return redirect("index")
@@ -101,4 +105,27 @@ def profile(request, username):
     return render(request, "network/profile.html", {
         "user_profile": user,
         "posts": posts,
+        "is_following": is_following,
     })
+
+
+@login_required
+def toggle_follow(request, username):
+    if request.method == "POST":
+        user_to_follow = get_object_or_404(User, username=username)
+        if user_to_follow == request.user:
+            return JsonResponse({"error": "You cannot follow yourself."}, status=400)
+
+        if request.user in user_to_follow.followers.all():
+            user_to_follow.followers.remove(request.user)
+            is_following = False
+        else:
+            user_to_follow.followers.add(request.user)
+            is_following = True
+
+        return JsonResponse({
+            "is_following": is_following,
+            "followers_count": user_to_follow.followers.count()
+        })
+
+    return JsonResponse({"error": "Invalid request method."}, status=400)
