@@ -1,0 +1,30 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+
+    <h1>Following posts:</h1>
+    {% for post in posts %}
+        <ul>
+            <li>
+                <strong>
+                    Post: {{ forloop.counter }}
+                </strong>
+            </li>
+            <li>
+                <a href="{% url 'profile' post.author.username %}">{{ post.author }}</a>
+            </li>
+            <li>
+                <h5 style="display: inline-block;">Text:</h5>
+                {{ post.text }}
+            </li>
+            <li>
+                Time:
+                {{ post.created_at|date:"d M Y, H:i" }}
+            </li>
+            <li>
+                Likes:
+                {{ post.likes.count }}
+            </li>
+        </ul>
+    {% endfor %}
+{% endblock %}

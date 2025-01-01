@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.core.paginator import Paginator, EmptyPage, Page
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -129,3 +130,19 @@ def toggle_follow(request, username):
         })
 
     return JsonResponse({"error": "Invalid request method."}, status=400)
+
+
+@login_required
+def following(request):
+    user = request.user 
+    following = user.followings.all()
+
+    posts = Post.objects.filter(author__in=following).order_by('-created_at')
+    
+    paginator = Paginator(posts, 10)
+
+    
+    
+    return render(request, "network/following.html", {
+        "posts": posts,
+    })
