@@ -1,14 +1,14 @@
 {% extends "network/layout.html" %}
 
 {% block body %}
-    <h1>{{ user.username }}</h1>
+    <h1>{{ user_profile.username }}</h1>
 
     <ul>
         <li>
-            Followers: {{ user.followers.count }}
+            Followers: {{ user_profile.followers.count }}
         </li>
         <li>
-            Following: {{ user.followings.count }}
+            Following: {{ user_profile.followings.count }}
         </li>
     </ul>
     <h1>Posts:</h1>

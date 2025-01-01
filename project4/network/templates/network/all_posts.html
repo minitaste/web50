@@ -9,7 +9,7 @@
                 Post: {{ forloop.counter }}
             </li>
             <li>
-                <h4>{{ post.author }}</h4>
+                <a href="{% url 'profile' post.author.username %}">{{ post.author }}</a>
             </li>
             <li>
                 <h5>Text:</h5>

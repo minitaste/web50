@@ -64,6 +64,7 @@ def register(request):
     else:
         return render(request, "network/register.html")
 
+
 @login_required
 def new_post(request):
     if request.method == 'POST':
@@ -98,6 +99,6 @@ def profile(request, username):
         return redirect("index")
     
     return render(request, "network/profile.html", {
-        "user": user,
+        "user_profile": user,
         "posts": posts,
     })
